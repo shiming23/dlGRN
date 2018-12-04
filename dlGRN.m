@@ -1,16 +1,16 @@
 function recgn = dlGRN(expr_matrix_tf, expr_matrix_tg, latents_num, ...
     samp_percentage, samp_times, alpha, T_max)
 % dlGRN(expr_matrix_tf, expr_matrix_tg, latents_num,samp_percentage, samp_times,alpha,T_max)
-% expr_matrix_tf:转录因子的表达水平矩阵；
-% expr_matrix_tg:目标基因的表达水平矩阵；
-% latents_num: 即l，也就是AR的数目；
-% samp_percentage:重采样样本占总样本比例；
-% samp_times:重采样次数；
+% expr_matrix_tf:expression matrix of tfs
+% expr_matrix_tg:expression matrix of target genes
+% latents_num: number of atomic regulators
+% samp_percentage: Percentage of sub-samples for re-sampling
+% samp_times:Times of the re-sampling
 if size(expr_matrix_tf,1)~=size(expr_matrix_tg,1)
-    error('转录因子与目标基因的样本数不同！');
+    error('Number of input samples for tfs and target genes are different !');
 end
 samp_num=round(size(expr_matrix_tf,1)*samp_percentage);
-recgn=zeros(size(expr_matrix_tf,2), size(expr_matrix_tg,2));%初始化关联矩阵。
+recgn=zeros(size(expr_matrix_tf,2), size(expr_matrix_tg,2));%Initialize the inferred W of the GRN 
 
 for ii=1:samp_times
     iitsample=randperm(size(expr_matrix_tf,1));
